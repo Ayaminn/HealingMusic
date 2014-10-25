@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PC</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript">
+         
+            //  var s = io.connect(); //リモート
+              var s = io.connect(); //ローカル
+             
+              //サーバから受け取るイベント
+              s.on("connect", function () {});  // 接続時
+              s.on("disconnect", function (client) {});  // 切断時
+              s.on("S_2_C_color", function (data) {
+                addMessage(data.value);
+              });
+             
+              //jqueryでメッセージを追加
+              function addMessage (value,color,size) {
+                var msg = value.replace( /[!@$%<>'"&|]/g, '' ); //タグ記号とかいくつか削除
+                  var $elementReference = document.getElementById( "msg_list" );
+                  $elementReference.style.background = msg;
+              }
+  </script>
+
+  <script type="text/javascript">
+    //ドラック&ドロップ
+     (function(){
+      $(".item_box").draggable({
+        snap:true,
+        opacity:'0.6'});
+    });
+  </script>
+  <style>
+    html,body{
+      width: 100%;
+      height: 100%;
+    }
+    body{
+      font-size:30px;
+      margin:0;
+      padding:0;
+      background: #aaa;
+      color: #000;
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+    #Fileter{
+      height: 100%;
+      width: 100%;
+      z-index: 1;
+      position: fixed;
+      left: 0;
+      top: 0;
+      opacity: 0;
+    }
+    #msg_list{
+      height: 100%;
+      width: 100%;
+    }
+    @keyframes 'anime1' {
+      0% { background:#fff}
+      1% {  opacity:1;  }
+      100% {  opacity:0;  }
+    }
+    @keyframes 'anime2' {
+      0% { background:#000}
+      1% {  opacity:1;  }
+      100% {  opacity:0;  }
+    }
+    @keyframes 'anime3' {
+      0% { background:#fff}
+      1% {  opacity:0;  }
+      100% {  opacity:1;  }
+    }
+    @keyframes 'anime4' {
+      0% { background:#000}
+      1% {  opacity:0;  }
+      100% {  opacity:1;  }
+    }
+    @keyframes 'anime5' {
+      0% { background:#fff}
+      1% {  opacity:1;  }
+      100% {  opacity:0;  }
+    }
+    @keyframes 'anime6' {
+      0% { background:#000}
+      1% {  opacity:1;  }
+      100% {  opacity:0;  }
+    }
+    @keyframes 'anime7' {
+      0% { opacity:0;}
+      100% {  opacity:0;  }
+    }
+  </style>
+</head>
+<body>
+  <div id="Fileter">
+  </div>
+  <div id="msg_list">
+  </div>
+</body>
+</html>

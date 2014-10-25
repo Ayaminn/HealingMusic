@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PC</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript">
+
+              var s = io.connect(); //ローカル
+             
+              //サーバから受け取るイベント
+              s.on("connect", function () {});  // 接続時
+              s.on("disconnect", function (client) {});  // 切断時
+              s.on("S_2_C_color", function (data) {
+                addMessageC(data.value);
+              });
+              s.on("S_2_C_animation", function (data) {
+                addMessageA(data.value);
+              });
+             
+              //クライアントからイベント送信（イベント名は自由に設定できます）
+              function sendMessageC(obj) {
+                var msg_c = obj.value;
+                s.emit("C_2_S_color", {value:msg_c}); //サーバへ送信
+              }
+              function sendAnimationA(obj) {
+                var msg_a = obj.value;
+                s.emit("C_2_S_animation", {value:msg_a}); //サーバへ送信
+              }
+             
+              //jqueryでカラーを追加
+              function addMessageC (value,color,size) {
+                var msg = value.replace( /[!@$%<>'"&|]/g, '' ); //タグ記号とかいくつか削除
+                  var $elementReference = document.getElementById( "msg_list" );
+                  $elementReference.style.background = msg;
+              }
+              /*{"-webkit-animation-name":"animation1","-webkit-animation-duration":"5s","-webkit-animation-iteration-count":"1","-webkit-animation-direction":"alternate"}*/
+              //jqueryでアニメーションを追加
+              function addMessageA (value,color,size) {
+                var msg = value;
+                console.log(msg);
+                $("#animation_list").css(msg);
+              }
+  </script>
+  <style>
+    html,body{
+      width: 100%;
+      height: 100%;
+    }
+    body{
+      font-size:30px;
+      margin:0;
+      padding:0;
+    }
+    /**アニメーション**/
+    @-webkit-keyframes 'animation1'{
+      0%{
+        background:#000;
+        opacity:1;
+      }
+      100%{
+        opacity:0;
+      }
+    }
+    @-webkit-keyframes 'animation2'{
+      0%{
+        background:#fff;
+        opacity:1;
+      }
+      100%{
+        background: :#fff;
+        opacity:0;
+      }
+    }
+    @-webkit-keyframes 'animation3'{
+      0%{
+        background:#000;
+        opacity:0;
+      }
+      100%{
+        background:#000;
+        opacity:1;
+      }
+    }
+    @-webkit-keyframes 'animation4'{
+      0%{
+        background:#fff;
+        opacity:0;
+      }
+      100%{
+        background:#fff;
+        opacity:1;
+      }
+    }
+    /**class ID**/
+    #msg_list{
+      height: 50%;
+      width: 100%;
+      z-index: 0;
+    }
+    #animation_list{
+      height: 50%;
+      width: 100%;
+      z-index: 1;
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+    .Key1{
+      height: 25%;
+      width: 10%;
+      margin: 0;
+      border: none;
+      float: left;
+      font-size: 30px;
+    }
+    .Key2{
+      height: 25%;
+      width: calc(100% / 9);
+      margin: 0;
+      border: none;
+      float: left;
+      font-size: 30px;
+    }
+    .Key3{
+      height: calc(25% - 2px);
+      width: calc(100% / 7);
+      margin: 0;
+      border: 1px solid #fff;
+      background: #222;
+      color: #fff;
+      font-size: 13px;
+      float: left;
+    }
+    #KeyBoard{
+      height: 50%;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="animation_list">
+  </div>
+  <div id="msg_list">
+  </div>
+  <form id="KeyBoard" action="" method="post" onsubmit="return false;">
+    <button onclick="sendMessageC(this);" style="background:rgb(0,0,153)" value="'rgb(0,0,153)'" class="Key1">1</button>
+
+    <button onclick="sendMessageC(this);" style="background:rgb(0,0,255)" value="'rgb(0,0,255)'" class="Key1">2</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(0,153,255)"  value="'RGB(0,153,255)'" class="Key1">3</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(0,204,255)"  value="'RGB(0,204,255)'" class="Key1">4</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(0,255,255)"  value="'RGB(0,255,255)'" class="Key1">5</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(102,255,255)"  value="'RGB(102,255,255)'" class="Key1">6</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(51,255,204)"  value="'RGB(51,255,204)'" class="Key1">7</button>
+    
+    <button onclick="sendMessageC(this);" style="background:RGB(102,255,153)"  value="'RGB(102,255,153)'" class="Key1">8</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(51,255,102)"  value="'RGB(51,255,102)'" class="Key1">9</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(102,255,51)"  value="'RGB(102,255,51)'" class="Key1">0</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(0,102,0)"  value="'RGB(0,102,0)'" class="Key1">Q</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(0,153,0)"  value="'RGB(0,153,0)'" class="Key1">W</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(0,204,0)"  value="'RGB(0,204,0)'" class="Key1">E</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(0,255,0)"  value="'RGB(0,255,0)'" class="Key1">R</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(102,255,00)"  value="'RGB(102,255,00)'" class="Key1">T</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(204,255,51)"  value="'RGB(204,255,51)'" class="Key1">Y</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(255,255,0)"  value="'RGB(255,255,0)'" class="Key1">U</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(255,204,0)"  value="'RGB(255,204,0)'" class="Key1">I</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(255,153,0)"  value="'RGB(255,153,0)'" class="Key1">O</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(255,102,0)"  value="'RGB(255,102,0)'" class="Key1">P</button>
+
+    <button onclick="sendMessageC(this);" style="color:#fff; background:RGB(0,0,0)"  value="'RGB(0,0,0)'" class="Key2">A</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(255,255,255)"  value="'RGB(255,255,255)'" class="Key2">S</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(255,0,0)"  value="'RGB(255,0,0)'" class="Key2">D</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(255,0,102)"  value="'RGB(255,0,102)'" class="Key2">F</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(255,0,153)"  value="'RGB(255,0,153)'" class="Key2">G</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(255,0,204"  value="'RGB(255,0,204'" class="Key2">H</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(255,0,255)"  value="'RGB(255,0,255)'" class="Key2">J</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(153,0,255)"  value="'RGB(153,0,255)'" class="Key2">K</button>
+
+    <button onclick="sendMessageC(this);" style="background:RGB(153,0,153)"  value="'RGB(153,0,153)'" class="Key2">L</button>
+
+    <button onclick="sendAnimationA(this);" value='"-webkit-animation-name":"animation1","-webkit-animation-duration":"5s","-webkit-animation-iteration-count":"1","-webkit-animation-direction":"alternate"' class="Key3">
+    Z
+    <br>
+    Animation1
+    </button>
+
+    <button onclick="sendAnimationA(this);" value="'-webkit-animation-name':'animation2','-webkit-animation-duration':'5s','-webkit-animation-iteration-count':'1','-webkit-animation-direction':'alternate'" class="Key3">
+    X
+    <br>
+    Animation2
+    </button>
+
+    <button onclick="sendAnimationA(this);" value="'-webkit-animation-name': 'animation3','-webkit-animation-duration':'5s','-webkit-animation-iteration-count':'1','-webkit-animation-direction':'alternate'" class="Key3">
+    C
+    <br>
+    Animation3
+    </button>
+
+    <button onclick="sendAnimationA(this);" value="'-webkit-animation-name: 'animation4';  -webkit-animation-duration: 5s;  -webkit-animation-iteration-count: 1;  -webkit-animation-direction:alternate;'" class="Key3">
+    V
+    <br>
+    Animation4
+    </button>
+
+    <button onclick="sendAnimationA(this);" value="'-webkit-animation-name: 'animation4';  -webkit-animation-duration: 1s;  -webkit-animation-iteration-count: infinite;  -webkit-animation-direction:alternate;-webkit-animation-timing-function:linear;'" class="Key3">
+    B
+    <br>
+    Animation5
+    </button>
+
+    <button onclick="sendAnimationA(this);" value="'-webkit-animation-name: 'animation3';  -webkit-animation-duration: 1s;  -webkit-animation-iteration-count: infinite;  -webkit-animation-direction:alternate;-webkit-animation-timing-function:linear;'" class="Key3">
+    N
+    <br>
+    Animation6
+    </button>
+
+    <button onclick="sendAnimationA(this);" value="''" class="Key3">
+    M
+    <br>
+    AnimationOff
+    </button>
+  </form>
+  <script type="text/javascript">
+    
+  </script>
+</body>
+</html>

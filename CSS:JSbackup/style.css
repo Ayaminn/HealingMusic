@@ -1,0 +1,333 @@
+          html,body{
+            height: 100%;
+          }
+          /*************************************クラスとかのCSS***************************/
+          body{
+            margin: 0;
+            color: #fff;
+            background-size: #fff;
+          }
+          /***Header***/
+          img.header{
+            width: 200px;
+            height: 40px;
+          }
+
+          /*************************************ID毎のCSS******************************/
+          /****メニュー****/
+          #menu{
+            background: -webkit-gradient(linear, left top, left bottom, from(#9f9fa5), to(#555));
+            padding: 4px;
+          }
+          #menu_button{
+            position: absolute;
+            top: 10px;
+            left: 70px;
+            width: 150px;
+            height: 50px;
+          }
+          button.button_m{
+            width: calc(100% /3);
+            height: 100%;
+            margin: 0;
+            font-size: 30px;
+            background: rgba(0,0,0,0);
+            border: none;
+            float: left;
+          }
+          img.button_menu{
+            width: 100%;
+            height: 100%;
+          }
+          #left_button{
+            border-radius: 10px 0px 0px 10px;
+          }
+          #center_button{
+            border-radius: 0px;
+          }
+          #right_button{
+            border-radius: 0px 10px 10px 0px;
+          }
+          #timer{
+            width: 700px;
+            height: 67px;
+            margin: 0 auto;
+            border-radius: 10px;
+            background: -webkit-gradient(linear, left top, left bottom, from(#2f2f34), to(#000009));
+            color: #6699ff;
+            font-size: 30px;
+            text-align: center;
+          }
+          input.TimerLabel{
+            width: 100px;
+            height: 60px;
+            font-size: 30px;
+            color: #6699ff;
+            text-align: center;
+            background: rgba(0,0,0,0);
+            border:none;
+          }
+
+          /****エディター****/
+          #Editor{
+            background: #1f1f24;
+            position: relative;
+            margin: -2px;
+            border: 2px solid #fff;
+          }
+          #Editor_type{
+            width: 250px;
+            height: 280px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            border-collapse: collapse;　
+          }
+          td.Editor_type{
+            background: -webkit-gradient(linear, left top, left bottom, from(#555), to(#333));
+            width: 100%;
+            height: 25%;
+            margin: 0;
+            border-bottom: 1px solid #000;
+          }
+          img.td_img_type{
+            width: 50px;
+            height: 50px;
+          }
+          /*form使った枠です。はい...*/
+          #ScrollBox{
+            width: calc(100% - 250px);
+            height: 310px;
+            bottom: 0;
+            position: absolute;
+            bottom: 0;
+            left: 250px;
+            overflow: scroll;
+          }
+          /*こっちがTable*/
+          #Editor_table{
+            width: 60010px;
+            height: 310px;
+          }
+          #Editor_number{
+            height: 30px;
+            width: 60010px;
+          }
+          #Editor_action_m_c{
+            height: 70px;
+            width: 60010px;
+            background: #777;
+          }
+          #Editor_action_m_c2{
+            height: 70px;
+            width: 60010px;
+            background: #777;
+          }
+          #Editor_action_m_c3{
+            height: 70px;
+            width: 60010px;
+            background: #777;
+          }
+          #Editor_action_m_a{
+            height: 70px;
+            width: 60010px;
+            background: #777;
+          }
+          .start_number{
+            height: 30px;
+            width: 10px;
+            float: left;
+          }
+          .start{
+            width: 10px;
+            height: 70px;
+            float: left;
+          }
+          #bar{
+            height: 310px;
+            width: 10px;
+            position: fixed;
+            left: 250px;
+          }
+          div.Number_item{
+            height: 30px;
+            width: 99px;
+            margin: 0;
+            padding: 0;
+            border-left: 1px solid #aaa;
+            float: left;
+          }
+          .item{
+            width: 99px;
+            height: 70px;
+            border-left: 1px solid #aaa;
+            float: left;
+            margin: 0;
+            padding: 0;
+          }
+          .ActionBoxColor{
+            width:99px; 
+            font-size:10px; 
+            height:70px; 
+            border-radius: 5px; 
+            overflow:hidden; 
+          }
+          .ActionBoxAnimation{
+            width:99px; 
+            font-size:10px; 
+            height:70px; 
+            border-radius: 5px; 
+            overflow:hidden; 
+          }
+          .ActionBoxText{
+            width:99px; 
+            font-size:10px; 
+            height:70px; 
+            border-radius: 5px; 
+            overflow:hidden; 
+          }
+
+          /*******************モーダルウィンドウウィンドウ*******************/
+          #modal-content-color{
+            width: 85%;
+            height: 60%;
+            background: #fff;
+            display: none;
+            z-index: 6;
+            position: fixed;
+            top: 20%;
+            left: 7.5%;
+            color: #000;
+          }
+          #modal-content-animation{
+            width: 70%;
+            height: 10%;
+            background: #fff;
+            display: none;
+            z-index: 6;
+            position: fixed;
+            top: 45%;
+            left: 15%;
+            color: #000;
+          }
+          #modal-content-text{
+            width: 70%;
+            height: 60%;
+            background: #fff;
+            display: none;
+            z-index: 6;
+            position: fixed;
+            top: 20%;
+            left: 15%;
+            color: #000;
+          }
+          #modal-overlay{
+            z-index: 5;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            background: rgba(0,0,0,0.7);
+          }
+          .Key1{
+            width: 10%;
+            height: calc(100% /3);
+            float: left;
+            border: none;
+            text-align: center;
+          }
+          .Key2{
+            width: calc(100%/9);
+            height: calc(100% /3);
+            float: left;
+            border: none;
+            text-align: center;
+          }
+          .Key3{
+            width: calc(100%/7);
+            height: calc(100% / 3);
+            float: left;
+            border: none;
+            text-align: center;
+          }
+          .Key4{
+            width: calc(100%/10 - 2px);
+            height: calc(100% - 2px);
+            float: left;
+            border: #aaa solid 1px;
+            background: #222;
+          }
+          /**アニメーション**/
+              @keyframes 'anime1' {
+                0% { background:#fff}
+                1% {  opacity:1;  }
+                100% {  opacity:0;  }
+              }
+              @keyframes 'anime2' {
+                0% { background:#000}
+                1% {  opacity:1;  }
+                100% {  opacity:0;  }
+              }
+              @keyframes 'anime3' {
+                0% { background:#fff}
+                1% {  opacity:0;  }
+                100% {  opacity:1;  }
+              }
+              @keyframes 'anime4' {
+                0% { background:#000}
+                1% {  opacity:0;  }
+                100% {  opacity:1;  }
+              }
+              @keyframes 'anime5' {
+                0% { background:#fff}
+                1% {  opacity:1;  }
+                100% {  opacity:0;  }
+              }
+              @keyframes 'anime6' {
+                0% { background:#000}
+                1% {  opacity:1;  }
+                100% {  opacity:0;  }
+              }
+              @keyframes 'anime7' {
+                0% { opacity:0;}
+                100% {  opacity:0;  }
+              }
+
+
+            /****デモ****/
+              #msg_list{
+                background: #000;
+                float: left;
+                margin: -2px;
+                border: 2px solid #fff;
+              }
+              body{
+                width: 100%;
+              }
+              #menu{
+                width: calc(100% - 8px);
+              }
+              #Editor{
+                width: 100%;
+              }
+              #msg_list{ 
+                width: 100%;
+              }
+              html,body{
+                height: 100%;
+              }
+              #menu{
+                height: calc(67 / 700 * 100%);
+              }
+              #Editor{
+                height: calc(420 / 700 * 100%);
+              }
+              #msg_list{
+                height: calc(205 / 700 * 100%);
+              }
+              #bar{
+                position: absolute;
+                bottom: 0;
+              }

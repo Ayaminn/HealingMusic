@@ -1,0 +1,959 @@
+<!DOCTYPE HTML>
+<html lang="ja-JP">
+    <head>
+        <meta charset="UTF-8">
+        <title>DVJsystem</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript">
+              var s = io.connect(); //ローカル
+             
+              //サーバから受け取るイベント
+              s.on("connect", function () {});  // 接続時
+              s.on("disconnect", function (client) {});  // 切断時
+              s.on("S_2_C_color", function (data) {
+                addMessage(data.value);
+              });       
+              //jqueryでメッセージを追加
+              function addMessage (value,color,size) {
+                var msg = value.replace( /[!@$%<>'"&|]/g, '' ); //タグ記号とかいくつか削除
+                  var $elementReference = document.getElementById( "msg_list" );
+                  $elementReference.style.background = msg;
+              }
+        </script>
+        <style type="text/css">
+            html,body{
+                height: 100%;
+              }
+              /*************************************クラスとかのCSS***************************/
+              body{
+                margin: 0;
+                color: #fff;
+                background-size: #fff;
+              }
+              /***Header***/
+              img.header{
+                width: 200px;
+                height: 40px;
+              }
+
+              /*************************************ID毎のCSS******************************/
+              /****メニュー****/
+              #menu{
+                background: -webkit-gradient(linear, left top, left bottom, from(#9f9fa5), to(#555));
+                padding: 4px;
+              }
+              #menu_button{
+                position: absolute;
+                top: 10px;
+                left: 70px;
+                width: 150px;
+                height: 50px;
+              }
+              button.button_m{
+                width: calc(100% /3);
+                height: 100%;
+                margin: 0;
+                font-size: 30px;
+                background: rgba(0,0,0,0);
+                border: none;
+                float: left;
+              }
+              img.button_menu{
+                width: 100%;
+                height: 100%;
+              }
+              #left_button{
+                border-radius: 10px 0px 0px 10px;
+              }
+              #center_button{
+                border-radius: 0px;
+              }
+              #right_button{
+                border-radius: 0px 10px 10px 0px;
+              }
+              #timer{
+                width: 700px;
+                height: 67px;
+                margin: 0 auto;
+                border-radius: 10px;
+                background: -webkit-gradient(linear, left top, left bottom, from(#2f2f34), to(#000009));
+                color: #6699ff;
+                font-size: 30px;
+                text-align: center;
+              }
+              input.TimerLabel{
+                width: 100px;
+                height: 60px;
+                font-size: 30px;
+                color: #6699ff;
+                text-align: center;
+                background: rgba(0,0,0,0);
+                border:none;
+              }
+
+              /****エディター****/
+              #Editor{
+                background: #1f1f24;
+                position: relative;
+                margin: -2px;
+                border: 2px solid #fff;
+              }
+              #Editor_type{
+                width: 250px;
+                height: 280px;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                border-collapse: collapse;　
+              }
+              td.Editor_type{
+                background: -webkit-gradient(linear, left top, left bottom, from(#555), to(#333));
+                width: 100%;
+                height: 25%;
+                margin: 0;
+                border-bottom: 1px solid #000;
+              }
+              img.td_img_type{
+                width: 50px;
+                height: 50px;
+              }
+              /*form使った枠です。はい...*/
+              #ScrollBox{
+                width: calc(100% - 250px);
+                height: 310px;
+                bottom: 0;
+                position: absolute;
+                bottom: 0;
+                left: 250px;
+                overflow: scroll;
+              }
+              /*こっちがTable*/
+              #Editor_table{
+                width: 60010px;
+                height: 310px;
+              }
+              #Editor_number{
+                height: 30px;
+                width: 60010px;
+              }
+              #Editor_action_m_c{
+                height: 70px;
+                width: 60010px;
+                background: #777;
+              }
+              #Editor_action_m_c2{
+                height: 70px;
+                width: 60010px;
+                background: #777;
+              }
+              #Editor_action_m_c3{
+                height: 70px;
+                width: 60010px;
+                background: #777;
+              }
+              #Editor_action_m_a{
+                height: 70px;
+                width: 60010px;
+                background: #777;
+              }
+              .start_number{
+                height: 30px;
+                width: 10px;
+                float: left;
+              }
+              .start{
+                width: 10px;
+                height: 70px;
+                float: left;
+              }
+              #bar{
+                height: 310px;
+                width: 10px;
+                position: fixed;
+                left: 250px;
+              }
+              div.Number_item{
+                height: 30px;
+                width: 99px;
+                margin: 0;
+                padding: 0;
+                border-left: 1px solid #aaa;
+                float: left;
+              }
+              .item{
+                width: 99px;
+                height: 70px;
+                border-left: 1px solid #aaa;
+                float: left;
+                margin: 0;
+                padding: 0;
+              }
+              .ActionBoxColor{
+                width:99px; 
+                font-size:10px; 
+                height:70px; 
+                border-radius: 5px; 
+                overflow:hidden; 
+              }
+              .ActionBoxAnimation{
+                width:99px; 
+                font-size:10px; 
+                height:70px; 
+                border-radius: 5px; 
+                overflow:hidden; 
+              }
+              .ActionBoxText{
+                width:99px; 
+                font-size:10px; 
+                height:70px; 
+                border-radius: 5px; 
+                overflow:hidden; 
+              }
+
+              /*******************モーダルウィンドウウィンドウ*******************/
+              #modal-content-color{
+                width: 85%;
+                height: 60%;
+                background: #fff;
+                display: none;
+                z-index: 6;
+                position: fixed;
+                top: 20%;
+                left: 7.5%;
+                color: #000;
+              }
+              #modal-content-animation{
+                width: 70%;
+                height: 10%;
+                background: #fff;
+                display: none;
+                z-index: 6;
+                position: fixed;
+                top: 45%;
+                left: 15%;
+                color: #000;
+              }
+              #modal-content-text{
+                width: 70%;
+                height: 60%;
+                background: #fff;
+                display: none;
+                z-index: 6;
+                position: fixed;
+                top: 20%;
+                left: 15%;
+                color: #000;
+              }
+              #modal-overlay{
+                z-index: 5;
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 120%;
+                background: rgba(0,0,0,0.7);
+              }
+              .Key1{
+                width: 10%;
+                height: calc(100% /3);
+                float: left;
+                border: none;
+                text-align: center;
+              }
+              .Key2{
+                width: calc(100%/9);
+                height: calc(100% /3);
+                float: left;
+                border: none;
+                text-align: center;
+              }
+              .Key3{
+                width: calc(100%/7);
+                height: calc(100% / 3);
+                float: left;
+                border: none;
+                text-align: center;
+              }
+              .Key4{
+                width: calc(100%/10 - 2px);
+                height: calc(100% - 2px);
+                float: left;
+                border: #aaa solid 1px;
+                background: #222;
+              }
+              /**アニメーション**/
+                  @keyframes 'anime1' {
+                    0% { background:#fff}
+                    1% {  opacity:1;  }
+                    100% {  opacity:0;  }
+                  }
+                  @keyframes 'anime2' {
+                    0% { background:#000}
+                    1% {  opacity:1;  }
+                    100% {  opacity:0;  }
+                  }
+                  @keyframes 'anime3' {
+                    0% { background:#fff}
+                    1% {  opacity:0;  }
+                    100% {  opacity:1;  }
+                  }
+                  @keyframes 'anime4' {
+                    0% { background:#000}
+                    1% {  opacity:0;  }
+                    100% {  opacity:1;  }
+                  }
+                  @keyframes 'anime5' {
+                    0% { background:#fff}
+                    1% {  opacity:1;  }
+                    100% {  opacity:0;  }
+                  }
+                  @keyframes 'anime6' {
+                    0% { background:#000}
+                    1% {  opacity:1;  }
+                    100% {  opacity:0;  }
+                  }
+                  @keyframes 'anime7' {
+                    0% { opacity:0;}
+                    100% {  opacity:0;  }
+                  }
+
+
+                /****デモ****/
+                  #msg_list{
+                    background: #000;
+                    float: left;
+                    margin: -2px;
+                    border: 2px solid #fff;
+                  }
+                  body{
+                    width: 100%;
+                  }
+                  #menu{
+                    width: calc(100% - 8px);
+                  }
+                  #Editor{
+                    width: 100%;
+                  }
+                  #msg_list{ 
+                    width: 100%;
+                  }
+                  html,body{
+                    height: 100%;
+                  }
+                  #menu{
+                    height: calc(67 / 700 * 100%);
+                  }
+                  #Editor{
+                    height: calc(420 / 700 * 100%);
+                  }
+                  #msg_list{
+                    height: calc(205 / 700 * 100%);
+                  }
+                  #bar{
+                    position: absolute;
+                    bottom: 0;
+                  }
+        </style>
+    </head>
+
+    <body>
+
+        <!--モーダルウィンドウ!-->
+        <div id="modal-content-color">
+            <div class="Key1" id="KeyQ">
+            	<h2>
+            		Q
+            	</h2>
+            </div>
+            <div class="Key1" id="KeyW">
+            	<h2>
+            		W
+            	</h2>
+            </div> 
+            <div class="Key1" id="KeyE">
+            	<h2>
+            		E
+            	</h2>
+            </div> 
+            <div class="Key1" id="KeyR">
+            	<h2>
+            		R
+            	</h2>
+            </div>
+            <div class="Key1" id="KeyT">
+            	<h2>
+            		T
+            	</h2>
+            </div> 
+            <div class="Key1" id="KeyY">
+            	<h2>
+            		Y
+            	</h2>
+            </div> 
+            <div class="Key1" id="KeyU">
+            	<h2>
+            		U
+            	</h2>
+            </div> 
+            <div class="Key1" id="KeyI">
+            	<h2>
+            		I
+            	</h2>
+            </div> 
+            <div class="Key1" id="KeyO">
+            	<h2>
+            		O
+            	</h2>
+            </div> 
+            <div class="Key1" id="KeyP">
+            	<h2>
+            		P
+            	</h2>
+            </div>
+            <div class="Key2" id="KeyA">
+            	<h2>
+            		A
+            	</h2>
+            </div> 
+            <div class="Key2" id="KeyS">
+            	<h2>
+            		S
+            	</h2>
+            </div> 
+            <div class="Key2" id="KeyD">
+            	<h2>
+            		D
+            	</h2>
+            </div> 
+            <div class="Key2" id="KeyF">
+            	<h2>
+            		F
+            	</h2>
+            </div> 
+            <div class="Key2" id="KeyG">
+            	<h2>
+            		G
+            	</h2>
+            </div> 
+            <div class="Key2" id="KeyH">
+            	<h2>
+            		H
+            	</h2>
+            </div> 
+            <div class="Key2" id="KeyJ">
+            	<h2>
+            		J
+            	</h2>
+            </div> 
+            <div class="Key2" id="KeyK">
+            	<h2>
+            		K
+            	</h2>
+            </div> 
+            <div class="Key2" id="KeyL">
+            	<h2>
+            		L
+            	</h2>
+            </div>
+            <div class="Key3" id="KeyZ">
+            	<h2>
+            		Z
+            	</h2>
+            </div> 
+            <div class="Key3" id="KeyX">
+            	<h2>
+            		X
+            	</h2>
+            </div> 
+            <div class="Key3" id="KeyC">
+            	<h2>
+            		C
+            	</h2>
+            </div> 
+            <div class="Key3" id="KeyV">
+            	<h2>
+            		V
+            	</h2>
+            </div>
+            <div class="Key3" id="KeyB">
+            	<h2>
+            		B
+            	</h2>
+            </div> 
+            <div class="Key3" id="KeyN">
+            	<h2>
+            		N
+            	</h2>
+            </div> 
+            <div class="Key3" id="KeyM">
+            	<h2>
+            		M
+            	</h2>
+            </div>
+        </div>
+
+        <div id="modal-content-animation">
+            <div class="Key4" id="KeyA1">
+            	<h2>
+            		1
+            	</h2>
+            </div>
+            <div class="Key4" id="KeyA2">
+            	<h2>
+            		2
+            	</h2>
+            </div> 
+            <div class="Key4" id="KeyA3">
+            	<h2>
+            		3
+            	</h2>
+            </div> 
+            <div class="Key4" id="KeyA4">
+            	<h2>
+            		4
+            	</h2>
+            </div> 
+            <div class="Key4" id="KeyA5">
+            	<h2>
+            		5
+            	</h2>
+            </div> 
+            <div class="Key4" id="KeyA6">
+            	<h2>
+            		6
+            	</h2>
+            </div> 
+            <div class="Key4" id="KeyA7">
+            	<h2>
+            		7
+            	</h2>
+            </div> 
+            <div class="Key4" id="KeyA8">
+            	<h2>
+            		8
+            	</h2>
+            </div> 
+            <div class="Key4" id="KeyA9">
+            	<h2>
+            		9
+            	</h2>
+            </div> 
+            <div class="Key4" id="KeyA0">
+            	<h2>
+            		0
+            	</h2>
+            </div>
+        </div>
+
+
+        <div id="modal-content-text">
+        </div>
+
+
+        <!--メニューについてだお〜!-->
+        <div id="menu">
+
+            <!--#menu_buttonについて!-->
+            <div id="menu_button">
+                <button class="button_m" id="left_button" onClick="back()">
+                    <img src="http://pandadao.sakura.ne.jp/DVJ/img/back.png" class="button_menu">
+                </button>
+
+                <button class="button_m" id="center_button" onClick="stop()">
+                    <img src="http://pandadao.sakura.ne.jp/DVJ/img/stop.png" class="button_menu">
+                </button>
+
+                <button class="button_m" id="right_button" onClick="start()">
+                    <img src="http://pandadao.sakura.ne.jp/DVJ/img/start.png" class="button_menu">
+                </button>
+            </div>
+
+            <!--#Timerについて!-->
+            <div id="timer">
+                <center>
+                    <input type="text" value="00" class="TimerLabel"readonly="readonly">
+                    :
+                    <input type="text" value="00" class="TimerLabel"readonly="readonly">
+                    :
+                    <input type="text" value="00" class="TimerLabel"readonly="readonly">
+                </center>
+            </div>
+        </div>
+
+        <!--エディターについてだお〜!-->
+        <div id="Editor">
+
+            <img src="http://pandadao.sakura.ne.jp/DVJ/img/Editor.png" class="header">
+
+            <!--エディタータイプについてだお〜!-->
+            <table id="Editor_type">
+
+                <tr id="Editor_type_m_c">
+                    <td class="Editor_type">
+                        <img src="http://pandadao.sakura.ne.jp/DVJ/img/icon_mobile.png" class="td_img_type">
+                        MobileColor1
+                    </td>
+                </tr>
+
+                <tr id="Editor_type_m_a">
+                    <td class="Editor_type">
+                        <img src="http://pandadao.sakura.ne.jp/DVJ/img/icon_mobile.png" class="td_img_type">
+                        MobileColor2
+                    </td>
+                </tr>
+
+                <tr id="Editor_type_s_c">
+                    <td class="Editor_type">
+                        <img src="http://pandadao.sakura.ne.jp/DVJ/img/icon_mobile.png" class="td_img_type">
+                        MobileColor3
+                    </td>
+                </tr>
+
+                <tr id="Editor_type_m_a">
+                    <td class="Editor_type">
+                        <img src="http://pandadao.sakura.ne.jp/DVJ/img/icon_screen.png" class="td_img_type">
+                        MobileAnimation
+                    </td>
+                </tr>
+
+            </table>
+
+            <!--エディターアクションについてだお〜!-->
+            <form id="ScrollBox">
+              <div id="Editor_table">
+                  <div id="Editor_number">
+                    <div class="start_number"></div>
+                  </div>
+                  <div id="Editor_action_m_c">
+                    <div class="start"></div>
+                  </div>
+                  <div id="Editor_action_m_c2">
+                    <div class="start"></div>
+                  </div>
+                  <div id="Editor_action_m_c3">
+                    <div class="start"></div>
+                  </div>
+                  <div id="Editor_action_m_a">
+                    <div class="start"></div>
+                  </div>
+              </div>
+            </form>
+                <img src="http://pandadao.sakura.ne.jp/DVJ/img/bar.png" id="bar">
+        </div>
+
+        <!--Demoについてだお〜!-->
+        <!--Mobile Demoについてだお〜!-->
+        <div id="msg_list">
+
+            <img src="http://pandadao.sakura.ne.jp/DVJ/img/Mobile.png" class="header">
+
+        </div>
+
+        <script type="text/javascript">
+
+            for (var i = 1; i <= 600; i++){
+              $("<div class='Number_item'>"+i+"s</div>").appendTo("#Editor_number")
+              $("<div class='item' id='obj_m_c"+i+"' onClick='BoxCreateColor(this)'></div>").appendTo("#Editor_action_m_c")
+              $("<div class='item' id='obj_m_a"+i+"' onClick='BoxCreateColor(this)'></div>").appendTo("#Editor_action_m_c2")
+              $("<div class='item' id='obj_s_c"+i+"' onClick='BoxCreateColor(this)'></div>").appendTo("#Editor_action_m_c3")
+              $("<div class='item' id='obj_s_a"+i+"' onClick='BoxCreateAnimation(this)'></div>").appendTo("#Editor_action_m_a")
+            }
+            //カラー
+              var $rgb;
+
+              var $Q = "rgb(0,0,153)";
+              var $W = "rgb(0,0,255)";
+              var $E = "RGB(0,153,255)";
+              var $R = "RGB(0,204,255)";
+              var $T = "RGB(0,255,255)";
+              var $Y = "RGB(102,255,255)";
+              var $U = "RGB(51,255,204)";
+              var $I = "RGB(102,255,153)";
+              var $O = "RGB(0,0,0)";
+              var $P = "RGB(255,255,255)";
+             
+              var $A = "RGB(0,153,0)";
+              var $S = "RGB(0,204,0)";
+              var $D = "RGB(0,255,0)";
+              var $F = "RGB(102,255,00)";
+              var $G = "RGB(204,255,51)";
+              var $H = "RGB(255,255,0)";
+              var $J = "RGB(255,204,0)";
+              var $K = "RGB(255,153,0)";
+              var $L = "RGB(255,102,0)";
+             
+              var $Z = "RGB(255,0,0)";
+              var $X = "RGB(255,0,102)";
+              var $C = "RGB(255,0,153)";
+              var $V = "RGB(255,0,204)";
+              var $B = "RGB(255,0,255)";
+              var $N = "RGB(153,0,255)";
+              var $M = "rgb(153,255,0)";
+            //アニメーション 
+              var $a1 = "animation-name: 'anime1';animation-duration: 1s;animation-timing-function: ease; animation-delay:0;animation-iteration-count: 0; animation-direction:alternate;";
+              var $a2 = "animation-name: 'anime2';  animation-duration: 1s; animation-timing-function: ease; animation-delay:0; animation-iteration-count: 0;  animation-direction:alternate;";
+              var $a3 = "animation-name: 'anime3';animation-duration: 3s;animation-timing-function: ease; animation-delay:0;animation-iteration-count: 0;animation-direction:normal;";
+              var $a4 = "animation-name: 'anime4'; animation-duration: 3s; animation-timing-function: ease; animation-delay:0;animation-iteration-count: 0; animation-direction:normal;";
+              var $a5 = "animation-name: 'anime5'; animation-duration: 3s; animation-timing-function: ease; animation-delay:0;  animation-iteration-count: 0; animation-direction:normal;";
+              var $a6 = "animation-name: 'anime6';animation-duration: 3s;animation-timing-function: ease; animation-delay:0;animation-iteration-count: 0;animation-direction:normal;";
+              var $a7 = "animation-name: 'anime7'; animation-duration: 1s; animation-timing-function: ease;animation-delay:0;animation-iteration-count: 0;animation-direction:normal;";
+              var $a8 = "animation-name: 'anime5'; animation-duration: 3s; animation-timing-function: ease; animation-delay:0;  animation-iteration-count: 0; animation-direction:normal;";
+              var $a9 = " animation-name: 'anime6';animation-duration: 3s;animation-timing-function: ease; animation-delay:0;animation-iteration-count: 0;animation-direction:normal;";
+              var $a0 = "animation-name: 'anime7'; animation-duration: 1s; animation-timing-function: ease;animation-delay:0;animation-iteration-count: 0;animation-direction:normal;";
+
+              $("#KeyQ").css("background",$Q);
+              $("#KeyW").css("background",$W);
+              $("#KeyE").css("background",$E);
+              $("#KeyR").css("background",$R);
+              $("#KeyT").css("background",$T);
+              $("#KeyY").css("background",$Y);
+              $("#KeyU").css("background",$U);
+              $("#KeyI").css("background",$I);
+              $("#KeyO").css("background",$O);
+              $("#KeyP").css("background",$P);
+
+              $("#KeyA").css("background",$A);
+              $("#KeyS").css("background",$S);
+              $("#KeyD").css("background",$D);
+              $("#KeyF").css("background",$F);
+              $("#KeyG").css("background",$G);
+              $("#KeyH").css("background",$H);
+              $("#KeyJ").css("background",$J);
+              $("#KeyK").css("background",$K);
+              $("#KeyL").css("background",$L);
+              
+              $("#KeyZ").css("background",$Z);
+              $("#KeyX").css("background",$X);
+              $("#KeyC").css("background",$C);
+              $("#KeyV").css("background",$V);
+              $("#KeyB").css("background",$B);
+              $("#KeyN").css("background",$N);
+              $("#KeyM").css("background",$M);
+
+              var msg_c;
+            
+            //ここからカラー送信コード
+                function send_color () {
+                  console.log(msg_c);
+                  s.emit("C_2_S_color", {value:msg_c}); //サーバへ送信
+                }
+                function send_animation () {
+                  console.log(msg_a);
+                  s.emit("C_2_S_animation", {value:msg_a}); //サーバへ送信
+                }
+            //ActionBox作成
+              //color1
+                function BoxCreateColor (obj) {
+                  $('body').append('<div id="modal-overlay"></div>');
+                  $('#modal-overlay').fadeIn('fast');
+                  $('#modal-content-color').fadeIn('slow');
+                  console.log("a");
+                  $(window).keyup(function(e) {
+                    console.log("b");
+                    var code = e.keyCode || e.which;
+                    var keyName = String.fromCharCode(code);
+                    $rgb = eval("$" +　keyName);
+                      $('#modal-content-color,#modal-overlay').fadeOut('slow',function(){
+                        //[#modal-overlay]を削除する
+                        $('#modal-overlay').remove(); 
+                      }); 
+                    ObjId = $(obj).attr("id");
+                    $("#"+ObjId).empty();
+                    console.log($("#"+ObjId));
+                    console.log($((
+                      "<div class='ActionBoxColor' id='"+
+                      keyName+
+                      ObjId+
+                      "'"+
+                      "value='"+
+                      $rgb+
+                      "' style='background:"+
+                      $rgb+
+                      ";'>"+
+                      $rgb+
+                      "</div>"
+                    )));
+
+                    $("#"+ObjId).append(
+                      "<div class='ActionBoxColor' id='"+
+                      keyName+
+                      ObjId+
+                      "'"+
+                      "value='"+
+                      $rgb+
+                      "' style='background:"+
+                      $rgb+
+                      ";'>"+
+                      $rgb+
+                      "</div>"
+                    );
+                    $(window).unbind("keyup");
+                    return false;
+                  });
+                  //[#modal-overlay]をクリックしたら…
+                  $('#modal-overlay').click(function(){
+                    //[#modal-content]と[#modal-overlay]をフェードアウトした後に…
+                    $('#modal-content-color,#modal-overlay').fadeOut('slow',function(){
+                      //[#modal-overlay]を削除する
+                      $('#modal-overlay').remove(); 
+                    });
+                  });
+                }
+
+              //color2
+                function BoxCreateColor2 (obj) {
+                  $('body').append('<div id="modal-overlay"></div>');
+                  $('#modal-overlay').fadeIn('fast');
+                  $('#modal-content-color').fadeIn('slow');
+                  $(window).keyup(function(e){
+                    var code = e.which;
+                    var keyName = String.fromCharCode(code);
+                    $rgb = eval("$" +　keyName);
+                      $('#modal-content-color,#modal-overlay').fadeOut('slow',function(){
+                        //[#modal-overlay]を削除する
+                        $('#modal-overlay').remove(); 
+                      }); 
+                    ObjId = $(obj).attr("id");
+                    $("#"+ObjId).empty();
+                    $("#"+ObjId).append(
+                      "<div class='ActionBoxColor' id='"+
+                      keyName+
+                      "_item'"+
+                      " value='"+
+                      $rgb+
+                      "' style='background:"+
+                      $rgb+
+                      ";'>"+
+                      $rgb+
+                      "</div>"
+                    );
+                    return false;
+                  });
+                  //[#modal-overlay]をクリックしたら…
+                  $('#modal-overlay').click(function(){
+                    //[#modal-content]と[#modal-overlay]をフェードアウトした後に…
+                    $('#modal-content-color,#modal-overlay').fadeOut('slow',function(){
+                      //[#modal-overlay]を削除する
+                      $('#modal-overlay').remove(); 
+                    });
+                  });
+                }
+
+
+              //Animation
+                function BoxCreateAnimation (obj) {
+                  $('body').append('<div id="modal-overlay"></div>');
+                  $('#modal-overlay').fadeIn('fast');
+                  $('#modal-content-animation').fadeIn('slow');
+                  $(window).keyup(function(e){
+                    var code = e.which;
+                    var keyName = String.fromCharCode(code);
+                    $rgb = eval("$a" +　keyName);
+                      $('#modal-content-animation,#modal-overlay').fadeOut('slow',function(){
+                        //[#modal-overlay]を削除する
+                        $('#modal-overlay').remove(); 
+                      }); 
+                    ObjId = $(obj).attr("id");
+                    $("#"+ObjId).empty();
+                    $("#"+ObjId).append(
+                      "<div class='ActionBoxColor' id='"+
+                      keyName+
+                      "_Animation'"+
+                      " value='"+
+                      $rgb+
+                      "' style='background:"+
+                      $rgb+
+                      ";'>"+
+                      $rgb+
+                      "</div>"
+                    );
+                  });
+                  //[#modal-overlay]をクリックしたら…
+                  $('#modal-overlay').click(function(){
+                    //[#modal-content]と[#modal-overlay]をフェードアウトした後に…
+                    $('#modal-content-animation,#modal-overlay').fadeOut('slow',function(){
+                      //[#modal-overlay]を削除する
+                      $('#modal-overlay').remove(); 
+                    });
+                  });
+                }
+                  
+                  function back () {
+                      var $ScrollBox = document.getElementById( "ScrollBox" );
+                      $ScrollBox.scrollLeft = $scrollX - 1;
+                      if( $scrollX < $ScrollBox.scrollWidth - $ScrollBox.clientWidth ){
+                          setTimeout( start, 1 );
+                      }else{
+                          $scrollX = 0;
+                          $ScrollBox.scrollLeft = 0;
+                          setTimeout( start, 1 );
+                      }
+                  }
+                  
+                  function stop () {
+                      var $ScrollBox = document.getElementById( "ScrollBox" );
+                      $ScrollBox.scrollLeft = ++$scrollX;
+                      if( $scrollX < $ScrollBox.scrollWidth - $ScrollBox.clientWidth ){
+                          setTimeout( start, 1 );
+                      }else{
+                          $scrollX = 0;
+                          $ScrollBox.scrollLeft = 0;
+                          setTimeout( start, 1 );
+                      }
+                  }
+
+                  var $scrollX = 0;
+                  function start() {
+                      var div1 = $("#bar");
+                      var div2 = $(".ActionBoxColor");
+                      var div3 = $(".ActionBoxAnimation");
+                      //color判定
+                      div2.each(function(i, e) {
+                        
+                        if( ( div1.offset().left < $(e).offset().left + $(e).width() ) &&
+                        ( div1.offset().left > $(e).offset().left ) )
+                        {
+                          //console.log($(e).attr("value"));
+                           msg_c = $(e).attr("value");
+                           send_color();
+                        }
+
+                      });
+
+                      // //color2判定
+                      // if( ( div1.offset().left < div3.offset().left + div3.width() ) &&
+                      // ( div1.offset().left + div1.width() > div3.offset().left ) )
+                      // {
+                      //   var msg_c2 = div3.attr("value")
+                      //   send_color2();
+                      // }
+                      // //Animation判定
+                      // if( ( div1.offset().left < div4.offset().left + div4.width() ) &&
+                      // ( div1.offset().left + div1.width() > div4.offset().left ) )
+                      // {
+                      //   var msg_a = div4.attr("value")
+                      //   send_animation();
+                      // }
+                      // //Text判定
+                      // if( ( div1.offset().left < div5.offset().left + div5.width() ) &&
+                      // ( div1.offset().left + div1.width() > div5.offset().left ) )
+                      // {
+                      //   var msg_t = div5.attr("value")
+                      //   send_text();
+                      // }
+                      //スクロール開始  
+                      var $ScrollBox = document.getElementById( "ScrollBox" );
+                      $ScrollBox.scrollLeft = ++$scrollX;
+                      if( $scrollX < $ScrollBox.scrollWidth - $ScrollBox.clientWidth ){
+                          setTimeout( start, 1 );
+                      }else{
+                          $scrollX = 0;
+                          $ScrollBox.scrollLeft = 0;
+                          setTimeout( start, 1 );
+                      }
+                  }
+        </script>
+    </body>
+</html>
