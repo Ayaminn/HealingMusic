@@ -23,6 +23,22 @@
                 s.emit("C_2_S", {value:msg}); //サーバへ送信
                 console.log(msg);
               }
+
+              $(function() {
+                for (var i = 0; i < 15; i++) {
+                  $("#main").append(
+                    '<button class="song" onclick="send(this)" value="'+i+'">'+
+                      '<div class="name">Song'+
+                      i+
+                      '</div>'+
+
+                      '<div class="artist">artist'+
+                      i+
+                      '</div>'+
+                    '</button>'
+                  );
+                };
+              });
   </script>
   <style>
     html,body{
@@ -31,7 +47,7 @@
       margin: 0;
     }
 
-    #menu{
+    #main{
       width: 100%;
       height: 100%;
       overflow: scroll;
@@ -45,20 +61,7 @@
   </style>
 </head>
 <body>
-  <form id="menu" action="" method="post" onsubmit="return false;">
-    <button class="song" onclick="send(this)" value="'json/song1.json'">
-      <div class="name">
-        
-      </div>
-
-      <div class="artist">
-        
-      </div>
-
-      <div class="img">
-        
-      </div>
-    </button>
+  <form id="main" action="" method="post" onsubmit="return false;">
   </form>
 </body>
 </html>

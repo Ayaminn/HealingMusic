@@ -16,22 +16,44 @@
               s.on("S_2_C", function (data) {
                 list(data.value);
               });
-
-              var i = 0;
-              function list() {
+              
+              var i = 1;
+              var a = 0;
+              function list(value) {
+                var data = value;
                   $("#main").append(
-                    '<div class="song_box" id="song'i+'" value="song'+i+'.mp3">'+
+                    '<div class="song_box" id="song'+i+'" data-value="'+data+'">'+
                     '<div class="Song_name">Song'+
-                    i+
+                    data+
                     '</div>'+
 
                     '<div class="Song_artist">artist'+
-                    i+
+                    data+
                     '</div>'+
                     '</div>'
-                    );
-                  i++;
-                };
+                  );
+                  a++;
+              };
+
+              $(function() {
+                music();
+              });
+
+              function music() {
+                if (a > 0) {
+                  startmusic();
+                }
+                window.setTimeout("music()", 1000);
+              }
+              var audioObj = new Audio();
+              function startmusic () {
+                var song = $("#song"+i).attr("data-value");
+                var url = "http://back9.jp/song/song"+song+".mp3";
+                audioObj.pause();
+                audioObj = new Audio(url);
+                audioObj.play();
+                a--;
+              }
   </script>
   <style>
     html,body{
