@@ -52,6 +52,7 @@
               var audioObj = new Audio();
               function startmusic () {
                 var song = $("#song"+i).attr("data-value");
+                i++;
                 var url = "http://back9.jp/song/song"+song+".mp3";
                 audioObj.pause();
                 audioObj = new Audio(url);
