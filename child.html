@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Lin:c</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <!--script src="jquery.js"></script!-->
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript">
+
+              var s = io.connect(); //ローカル
+             
+              //サーバから受け取るイベント
+              s.on("connect", function () {});  // 接続時
+              s.on("disconnect", function (client) {});  // 切断時
+              s.on("S_2_C", function (data) {
+                addWebSite(data.value);
+              });
+             
+              //クライアントからイベント送信（イベント名は自由に設定できます)
+              function send(obj) {
+                var msg = obj.value;
+                s.emit("C_2_S", {value:msg}); //サーバへ送信
+                console.log(msg);
+              }
+  </script>
+  <style>
+    html,body{
+      height: 100%;
+      width: 100%;
+      margin: 0;
+    }
+
+    #menu{
+      width: 100%;
+      height: 100%;
+      overflow: scroll;
+    }
+
+    .song{
+      width: 100%;
+      height: 100px;
+      background: #444;
+    }
+  </style>
+</head>
+<body>
+  <form id="menu" action="" method="post" onsubmit="return false;">
+    <button class="song" onclick="send(this)" value="'json/song1.json'">
+      <div class="name">
+        
+      </div>
+
+      <div class="artist">
+        
+      </div>
+
+      <div class="img">
+        
+      </div>
+    </button>
+  </form>
+</body>
+</html>
