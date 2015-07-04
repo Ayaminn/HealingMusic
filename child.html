@@ -25,15 +25,17 @@
               }
 
               $(function() {
-                for (var i = 0; i < 15; i++) {
+                for (var i = 1; i < 16; i++) {
                   $("#main").append(
-                    '<button class="song" onclick="send(this)" value="'+i+'">'+
-                      '<div class="name">Song'+
-                      i+
-                      '</div>'+
+                    '<button class="song" onclick="send(this)" value="'+i+'" style="background:url(http://back9.jp/images/list'+i+'); background-size: cover;">'+
+                      '<div class="songback">'+
+                        '<div class="name">Song'+
+                        i+
+                        '</div>'+
 
-                      '<div class="artist">artist'+
-                      i+
+                        '<div class="artist">artist'+
+                        i+
+                        '</div>'+
                       '</div>'+
                     '</button>'
                   );
@@ -55,8 +57,34 @@
 
     .song{
       width: 100%;
-      height: 100px;
-      background: #444;
+      height: 200px;
+      position: relative;
+      border: none;
+      padding: 0;
+    }
+
+    .songback{
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+    }
+
+    .name{
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      font-size: 40px;
+      position: absolute;
+      top: 30px;
+    }
+
+    .artist{
+      width: 100%;
+      text-align: center;
+      color: #bbb;
+      font-size: 35px;
+      position: absolute;
+      top: 100px;
     }
   </style>
 </head>
