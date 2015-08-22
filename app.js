@@ -18,6 +18,11 @@ var server = http.createServer(function(req, res) {
   var output = fs.readFileSync("LiveController.html", "utf-8");
   res.end(output);
   }
+  if(pathname === "/preview"){
+  res.writeHead(200, {"Content-Type":"text/html"});
+  var output = fs.readFileSync("Preview.html", "utf-8");
+  res.end(output);
+  }
 // (見つからなかったら status: 404 で NotFound用のhtmlを返す)
 
 }).listen(process.env.PORT || 3000);
