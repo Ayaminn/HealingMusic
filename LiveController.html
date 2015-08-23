@@ -17,6 +17,8 @@
               s.on("connect", function () {});  // 接続時
               s.on("disconnect", function (client) {});  // 切断時
               function LiveStart() {
+                StartMusic();
+                audioObj.load();
                 DD = new Date();
                 Minutes = DD.getMinutes();
                 Seconds = DD.getSeconds();
@@ -25,8 +27,6 @@
                 s.emit("LiveStart", {value:msg});
                 Seconds = Seconds + 4;
                 StartTime = Minutes + "-" + Seconds;
-                StartMusic();
-                audioObj.load();
               }
               function StartMusic() {
                 DD = new Date();
