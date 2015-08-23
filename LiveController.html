@@ -20,7 +20,7 @@
                 DD = new Date();
                 Minutes = DD.getMinutes();
                 Seconds = DD.getSeconds();
-                Seconds = Seconds + 20;
+                Seconds = Seconds + 30;
                 var msg = Minutes + "-" + Seconds;
                 s.emit("LiveStart", {value:msg});
                 Seconds = Seconds + 4;
