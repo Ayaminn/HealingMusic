@@ -17,7 +17,6 @@
               s.on("connect", function () {});  // 接続時
               s.on("disconnect", function (client) {});  // 切断時
               function LiveStart() {
-                StartMusic();
                 audioObj.load();
                 DD = new Date();
                 Minutes = DD.getMinutes();
@@ -25,8 +24,10 @@
                 Seconds = Seconds + 15;
                 var msg = Minutes + "-" + Seconds;
                 s.emit("LiveStart", {value:msg});
+                StartMusic();
                 Seconds = Seconds + 4;
                 StartTime = Minutes + "-" + Seconds;
+                console.log("とりあえず、動いた");
               }
               function StartMusic() {
                 DD = new Date();
@@ -34,6 +35,7 @@
                 Seconds = DD.getSeconds();
                 var NowTime = Minutes + "-" + Seconds;
                 if (NowTime == StartTime) {
+                  console.log("音楽〜すたーと！");
                   audioObj.play();
                 }else{
                   setTimeout("StartMusic()", 100);

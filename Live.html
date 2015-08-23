@@ -14,11 +14,13 @@
               s.on("connect", function () {});  // 接続時
               s.on("disconnect", function (client) {});  // 切断時
               s.on("S2C", function (data) {
+                console.log("届いてる");
                 StartTime = data.value;
                 LiveStart();
               });
 
               function LiveStart () {
+                console.log("OK");
                 DD = new Date();
                 Minutes = DD.getMinutes();
                 Seconds = DD.getSeconds();
@@ -27,7 +29,7 @@
                   console.log("がんばれ!");
                   $("#display1").css("-webkit-animation-play-state","running");
                 }else{
-                  setTimeout("LiveStart()", 100);
+                  setTimeout("LiveStart()", 50);
                 }
               }
   </script>
