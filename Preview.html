@@ -9,26 +9,6 @@
   <script type="text/javascript">
 
               var s = io.connect(); //ローカル
-
-              //サーバから受け取るイベント
-              s.on("connect", function () {});  // 接続時
-              s.on("disconnect", function (client) {});  // 切断時
-              s.on("S2C", function (data) {
-                StartTime = data.value;
-                LiveStart();
-              });
-
-              function LiveStart () {
-                DD = new Date();
-                Minutes = DD.getMinutes();
-                Seconds = DD.getSeconds();
-                NowTime = Minutes + "-" + Seconds;
-                if (NowTime == StartTime) {
-                  $(".display").css("-webkit-animation-play-state","running");
-                }else{
-                  setTimeout("LiveStart()", 50);
-                }
-              }
   </script>
   <style type="text/css">
     html,body{
@@ -39,124 +19,11 @@
     }
 
     .display{
-      width: calc((100% / 8) - 50px);
-      height: calc((100% / 5) - 50px);
+      width: calc((100% / 6) - 50px);
+      height: calc((100% / 6) - 50px);
       float: left;
       margin: 25px;
-      background: #000;
-      animation: Click1 1s linear 0s 2 forwards , Click2 0.5s linear 2s 4 forwards , Blue1 12s linear 4s forwards, Blue2 8.5s linear 16s forwards,Blue3 0.48s linear 23.5s 26 forwards,Blue4 0.48s linear 35s 80 forwards,Blue5 15.5s linear 66s forwards,Blue6 15s linear 81.5s forwards,Blue7 0.48s linear 96.5s 8 forwards,Sky 0.48s linear 100.34s 80 forwards,fead 15s linear 120s forwards;
-      animation-play-state: paused;
       border: none;
-    }
-
-    @-webkit-keyframes Click1 {
-      1%{background: #fff;}
-      30%{background: #000;}
-    }
-
-    @-moz-keyframes Click1 {
-      1%{background: #fff;}
-      30%{background: #000;}
-    }
-
-    @-webkit-keyframes Click2 {
-      1%{background: #fff;}
-      30%{background: #000;}
-    }
-
-    @-moz-keyframes Click2 {
-      1%{background: #fff;}
-      30%{background: #000;}
-    }
-
-    @-webkit-keyframes Blue1{
-      20%{background: #001;}
-      100%{background: #00f;}
-    }
-
-    @-moz-keyframes Blue1{
-      20%{background: #001;}
-      100%{background: #00f;}
-    }
-
-    @-webkit-keyframes Blue2{
-      1%{background: #000;}
-      100%{background: #026;}
-    }
-
-    @-moz-keyframes Blue2{
-      1%{background: #000;}
-      100%{background: #026;}
-    }
-
-    @-webkit-keyframes Blue3{
-      1%{background: #000;}
-      100%{background: #026;}
-    }
-
-    @-moz-keyframes Blue3{
-      1%{background: #000;}
-      100%{background: #026;}
-    }
-
-    @-webkit-keyframes Blue4{
-      1%{background: #000;}
-      100%{background: #09f;}
-    }
-
-    @-moz-keyframes Blue4{
-      1%{background: #000;}
-      100%{background: #09f;}
-    }
-
-    @-webkit-keyframes Blue5{
-      20%{background: #000;}
-      100%{background: #00f;}
-    }
-
-    @-moz-keyframes Blue5{
-      20%{background: #000;}
-      100%{background: #00f;}
-    }
-
-    @-webkit-keyframes Blue6{
-      0%{background: #00f;}
-      100%{background: #08f;}
-    }
-
-    @-moz-keyframes Blue6{
-      0%{background: #00f;}
-      100%{background: #08f;}
-    }
-
-    @-webkit-keyframes Blue7{
-      1%{background: #000;}
-      100%{background: #08f;}
-    }
-
-    @-moz-keyframes Blue7{
-      1%{background: #000;}
-      100%{background: #08f;}
-    }
-
-    @-webkit-keyframes Sky{
-      1%{background: #ef0;}
-      100%{background: #08f;}
-    }
-
-    @-moz-keyframes Sky{
-      1%{background: #ef0;}
-      100%{background: #08f;}
-    }
-
-    @-webkit-keyframes fead{
-      1%{opacity: 1;}
-      100%{opacity: 0;}
-    }
-
-    @-moz-keyframes fead{
-      1%{opacity: 1;}
-      100%{opacity: 0;}
     }
 
   </style>
