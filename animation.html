@@ -7,7 +7,7 @@
   <!--script src="jquery.js"></script!-->
   <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript">
-
+/*
               var s = io.connect(); //ローカル
 
               //サーバから受け取るイベント
@@ -16,7 +16,7 @@
               s.on("S2C", function (data) {
                 StartTime = data.value;
                 LiveStart();
-              });
+              });*/
 
               function LiveStart () {
                 DD = new Date();
@@ -45,7 +45,6 @@
       float: left;
       background: #000;
       -webkit-animation: Click1 1s linear 0s 2 forwards , Click2 0.5s linear 2s 4 forwards , Blue1 12s linear 4s forwards, Blue2 8.5s linear 16s forwards,Blue3 0.48s linear 23.5s 26 forwards,Blue4 0.48s linear 35s 80 forwards,Blue5 15.5s linear 66s forwards,Blue6 15s linear 81.5s forwards,Blue7 0.48s linear 96.5s 8 forwards,Sky 0.48s linear 100.34s 80 forwards,fead 15s linear 120s forwards;
-      -webkit-animation-play-state: paused;
     }
 
     @-webkit-keyframes Click1 {
