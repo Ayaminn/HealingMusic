@@ -25,7 +25,7 @@
                 NowTime = Minutes + "-" + Seconds;
                 if (NowTime == StartTime) {
                   alert("動いた");
-                  $(".display").css("-webkit-animation-play-state","running");
+                  $(".display").css("animation-play-state","running");
                 }else{
                   setTimeout("LiveStart()", 50);
                 }
