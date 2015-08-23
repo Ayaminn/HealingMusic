@@ -16,6 +16,7 @@
               s.on("S2C", function (data) {
                 StartTime = data.value;
                 LiveStart();
+                alert("動いた？");
               });
 
               function LiveStart () {
@@ -26,7 +27,7 @@
                 if (NowTime == StartTime) {
                   $(".display").css("-webkit-animation-play-state","running");
                 }else{
-                  setTimeout("LiveStart()", 100);
+                  setTimeout("LiveStart()", 50);
                 }
               }
   </script>
