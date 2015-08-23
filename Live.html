@@ -16,7 +16,6 @@
               s.on("S2C", function (data) {
                 StartTime = data.value;
                 LiveStart();
-                alert("動いた？");
               });
 
               function LiveStart () {
@@ -24,6 +23,7 @@
                 Minutes = DD.getMinutes();
                 Seconds = DD.getSeconds();
                 NowTime = Minutes + "-" + Seconds;
+                alert(NowTime);
                 if (NowTime == StartTime) {
                   $(".display").css("-webkit-animation-play-state","running");
                 }else{
