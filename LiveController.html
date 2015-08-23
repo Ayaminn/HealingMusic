@@ -18,24 +18,22 @@
               s.on("disconnect", function (client) {});  // 切断時
               function LiveStart() {
                 audioObj.load();
-                DD = new Date();
-                Minutes = DD.getMinutes();
-                Seconds = DD.getSeconds();
+                var DD = new Date();
+                var Minutes = DD.getMinutes();
+                var Seconds = DD.getSeconds();
                 Seconds = Seconds + 15;
                 var msg = Minutes + "-" + Seconds;
                 s.emit("LiveStart", {value:msg});
-                StartMusic();
                 Seconds = Seconds + 4;
                 StartTime = Minutes + "-" + Seconds;
-                console.log("とりあえず、動いた");
+                StartMusic();
               }
               function StartMusic() {
-                DD = new Date();
-                Minutes = DD.getMinutes();
-                Seconds = DD.getSeconds();
+                var DD = new Date();
+                var Minutes = DD.getMinutes();
+                var Seconds = DD.getSeconds();
                 var NowTime = Minutes + "-" + Seconds;
                 if (NowTime == StartTime) {
-                  console.log("音楽〜すたーと！");
                   audioObj.play();
                 }else{
                   setTimeout("StartMusic()", 100);
