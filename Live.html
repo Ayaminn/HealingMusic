@@ -23,8 +23,8 @@
                 Minutes = DD.getMinutes();
                 Seconds = DD.getSeconds();
                 NowTime = Minutes + "-" + Seconds;
-                alert(NowTime);
                 if (NowTime == StartTime) {
+                  alert("動いた");
                   $(".display").css("-webkit-animation-play-state","running");
                 }else{
                   setTimeout("LiveStart()", 50);
