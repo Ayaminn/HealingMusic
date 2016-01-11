@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="forest.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+	<script src="timer.js"></script>
+	<title>Healing Music</title>
+</head>
+<body onLoad="StartAudio()">
+
+	<div class="Main" id="Main2">
+
+
+	<div id="countDownWrap">
+	   <div id="countDown">
+			 000s
+	   </div>
+
+
+
+	   <div id="control">
+				 <div class="tag">
+			      <div id="startBtn" class="btn">Start</div>
+			      <div id="stopBtn" class="btn">Stop</div>
+			      <div id="resetBtn" class="btn">Reset</div>
+			   </div>
+				 <br>
+	      <p>
+					Set time<input type="text" id="setSecond"> s <br>
+
+					<div class="nyu">
+					<button class="nya" id="changeSecond" >OK</button>
+					</div>
+
+				</p>
+	      <p id="error"></p>
+
+		</div>
+
+
+	</div>
+
+
+
+	<script language="JavaScript" type="text/javascript">
+
+		function StartAudio() {
+			console.log("aaa");
+			var audio = new Audio();
+			audio.src = "audio/forest.mp3";
+			audio.loop = true;
+			audio.play();
+		}
+	</script>
+</div>
+</body>
+</html>
